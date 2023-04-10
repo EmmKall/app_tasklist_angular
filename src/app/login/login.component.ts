@@ -3,6 +3,8 @@ import { FormBuilder, FormsModule, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { HelpersService } from '../services/helpers.service';
 import { LoginService } from './login.service';
+import { InformationService } from '../services/information.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -21,8 +23,12 @@ export class LoginComponent
 
   form: FormGroup;
 
-  constructor( private formBuilder: FormBuilder, private router: Router, private helpers: HelpersService, private sLogin: LoginService )
+  $isLoged: Subscription;
+
+  constructor( private formBuilder: FormBuilder, private router: Router, private helpers: HelpersService, private sLogin: LoginService, private sInformation: InformationService )
   {
+    this.$isLoged = this.sInformation.name$.subscribe();
+
     this.form = this.formBuilder.group({
       email:    [ '', [ Validators.required ],[] ],
       password: [ '', [ Validators.required ],[] ],
@@ -44,10 +50,14 @@ export class LoginComponent
       const { status } = result;
       if( status === 200 )
       {
-        this.helpers.showAlert( 'Welcome', 'Login sucessfully', 'success', 3000 );
+        /* Update Token */
+        const { user, token } = result.data;
+        this.helpers.setToken( token, user );
+        this.sInformation.name$.emit( true );
+        this.helpers.showAlert( 'Welcome', 'Login sucessfully', 'success', 2500 );
         setTimeout(() => {
-          this.router.navigate( ['/'] );
-        }, 2300);
+          this.router.navigate( ['/app'] );
+        }, 2500);
       } else if( status === 403 )
       {
         this.helpers.showAlert( 'Login failed', 'Credentials not valid', 'warning', 3000 );
@@ -55,7 +65,6 @@ export class LoginComponent
       {
         this.helpers.showAlert( 'Error', 'Something wrong', 'error', 3000 );
       }
-      console.log( result );
       this.spinner = false;
     })
 

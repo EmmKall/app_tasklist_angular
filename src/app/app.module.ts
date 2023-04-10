@@ -15,6 +15,7 @@ import { UsersComponent } from './body/users/users.component';
 import { CategoryComponent } from './body/category/category.component';
 import { TaskComponent } from './body/task/task.component';
 import { SpinnerComponent } from './spinner/spinner.component';
+import { InformationService } from './services/information.service';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,9 @@ import { SpinnerComponent } from './spinner/spinner.component';
     ReactiveFormsModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    InformationService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -13,4 +13,27 @@ export class HelpersService {
     Swal.fire({ position: 'center', icon, title, text,showConfirmButton: false, timer })
   }
 
+  setToken( $token: string, $name: string ): void
+  {
+    localStorage.setItem( '_token', $token );
+    localStorage.setItem( '_name',  $name );
+  }
+
+  getToken(): string
+  {
+    const token: string = localStorage.getItem( '_token' ) ?? '';
+    return token;
+  }
+
+  getName(): string
+  {
+    const name: string = localStorage.getItem( '_name' ) ?? '';
+    return name;
+  }
+
+  destroyToken(): void
+  {
+    localStorage.clear();
+  }
+
 }
