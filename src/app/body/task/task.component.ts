@@ -1,13 +1,13 @@
 import { Component, ViewChild } from '@angular/core';
 import { HelpersService } from 'src/app/services/helpers.service';
 import { TaskService } from './task.service';
-import { MatTableDataSource, _MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort, Sort } from '@angular/material/sort';
+
+import Swal from 'sweetalert2';
 import { Task } from './task';
 import { CategoryService } from '../category/category.service';
 import { Category } from '../category/category';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-task',
@@ -37,8 +37,8 @@ export class TaskComponent
 
   displayedColumns: string[] = ['name', 'description', 'category', 'actions' ];
   dataSource = new MatTableDataSource( this.dataView );
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
 
   filter:string = '';
 
@@ -52,7 +52,6 @@ export class TaskComponent
   ngAfterViewInit()
   {
     this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
   }
 
   getData(): void
@@ -64,7 +63,7 @@ export class TaskComponent
           const { data }:any = result;
           this.data = data;
           this.dataView = data;
-          this.dataSource = new _MatTableDataSource( this.data );
+          this.dataSource = new MatTableDataSource( this.data );
           /* console.log( this.data ); */
         } else if( status === 403 )
         {
@@ -259,6 +258,7 @@ export class TaskComponent
       }
     })
   }
+
 
 }
 
