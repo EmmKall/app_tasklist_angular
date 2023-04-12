@@ -10,7 +10,7 @@ import { UsersComponent } from './body/users/users.component';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'app',   component: BodyComponent, canActivate: [ SesionGuard ], children: [
-    { path: '', component: TaskComponent },
+    { path: 'task', component: TaskComponent },
     { path: 'category', component: CategoryComponent },
     { path: 'user', component: UsersComponent },
     { path: '**', component: TaskComponent },

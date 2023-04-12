@@ -2,3 +2,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+table{ overflow-x: scroll; }
+
+.modal-container
+{
+  /* position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100vh; */
+  background: #0b5bd473;
+}
+
+.modal
+{
+  position: relative;
+  top: 30%;
+}
+
+.bg-fadeIn{ animation: fadeIn 0.5s ease-in-out forwards; animation-iteration-count: 1;  }
+.bg-fadeOut{ animation: fadeOut 0.5s ease-in-out forwards; animation-iteration-count: 1;  }
+.bg-scaleIn{ animation: scaleIn 0.5s ease-in-out forwards; animation-iteration-count: 1;  }
+.bg-scaleOut{ animation: scaleOut 0.5s ease-in-out forwards; animation-iteration-count: 1;  }

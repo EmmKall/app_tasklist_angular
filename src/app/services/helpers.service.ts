@@ -13,10 +13,11 @@ export class HelpersService {
     Swal.fire({ position: 'center', icon, title, text,showConfirmButton: false, timer })
   }
 
-  setToken( $token: string, $name: string ): void
+  setToken( id:string, token: string, name: string ): void
   {
-    localStorage.setItem( '_token', $token );
-    localStorage.setItem( '_name',  $name );
+    localStorage.setItem( '_token', token );
+    localStorage.setItem( '_name',  name );
+    localStorage.setItem( '_id',  id );
   }
 
   getToken(): string
@@ -29,6 +30,12 @@ export class HelpersService {
   {
     const name: string = localStorage.getItem( '_name' ) ?? '';
     return name;
+  }
+
+  getId(): string
+  {
+    const id: string = localStorage.getItem( '_id' ) ?? '';
+    return id;
   }
 
   destroyToken(): void

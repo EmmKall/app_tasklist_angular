@@ -1,8 +1,91 @@
-<div class="my-5 md:my-10 p-3 bg-white rounded-lg shadow-xl">
-  <h1 class="text-center text-xl font-bold text-blue-500 border-b-2 border-blue-500">Task lists</h1>
-  <button class="my-2 p-3 shadow-lg rounded-lg bg-blue-500 text-white"><i class="fa-light fa-plus fa-flip fa-xl" style="color: #ffffff;"></i> Add</button>
+<div class="container mx-auto">
+  <div class="my-5 md:my-10 p-3 bg-white rounded-lg shadow-xl">
+    <h1 class="text-center text-xl font-bold text-blue-500 border-b-2 border-blue-500">Task lists</h1>
+    <button (click)="showAddTsk()" class="my-2 p-3 shadow-lg rounded-lg bg-blue-500 text-white"><i class="fa-light fa-plus fa-flip fa-xl" style="color: #ffffff;"></i> Add Task</button>
+  </div>
+
+  <div class="my-5 md:my-10 py-3 bg-white rounded-lg shadow-lg">
+
+    <mat-card>
+      <mat-card-content>
+
+        <div class="w-full my-2">
+          <input type="text" [(ngModel)]="filter" (input)="filterData()" class="w-full p-2 bg-gray-200" placeholder="Filter task" >
+        </div>
+
+        <div class="mat-elevation-z8">
+          <table mat-table [dataSource]="dataView" matSort>
+
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Task </th>
+              <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="description">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
+              <td mat-cell *matCellDef="let row"> {{row.description}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="category">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+              <td mat-cell *matCellDef="let row"> {{row.category}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+              <td mat-cell *matCellDef="let row">
+                <div class="flex flex-row justify-evenly">
+                  <button class="p-2 text-white rounded bg-green-500"><i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i></button>
+                  <button class="p-2 text-white rounded bg-red-500"><i class="fa-regular fa-trash-can" style="color: #ffffff;"></i></button>
+                </div>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            <!-- Row shown when there is no matching data. -->
+            <!-- <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+            </tr> -->
+          </table>
+
+          <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+        </div>
+
+      </mat-card-content>
+    </mat-card>
+
+  </div>
 </div>
 
-<div class="my-5 md:my-10 py-3 bg-white rounded-lg shadow-lg">
-
+<!-- Modal to add/edit -->
+<div *ngIf="showeModal" class="modal-container fixed inset-0 bg-scaleIn">
+  <div class="modal w-full md:w-1/3 mx-auto p-3 rounded-lg shadow-2xl shadow-black bg-white">
+    <div class="modal-tittle p-2 flex flex-row justify-between content-center border-b-2 border-blue-500">
+      <h3 class="self-center text-center font-bold">{{ modalTittle }} Task</h3>
+      <button (click)="closeModal()" class="bg-red-500 p-1 rounded"><i class="fa-solid fa-xmark fa-lg" style="color: #ffffff;"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="my-2 flex flex-col">
+        <label for="">Task</label>
+        <input type="text" name="" id="" [(ngModel)]="task.name" placeholder="task name" class="p-2 bg-gray-200 border-t-2 border-blue-500">
+      </div>
+      <div class="my-2 flex flex-col">
+        <label for="">Description</label>
+        <textarea name="" id="" [(ngModel)]="task.description" class="p-2 bg-gray-200 border-t-2 border-blue-500"></textarea>
+      </div>
+      <div class="my-2 flex flex-col">
+        <label for="">Status</label>
+        <select name="" id="" [(ngModel)]="task.category" class="p-2 bg-gray-200 border-t-2 border-blue-500">
+          <option value="" selected disabled>--Select a option--</option>
+          <option value="1">Pending</option>
+        </select>
+      </div>
+      <div class="w-full flex flex-row justify-evenly py-3">
+        <button (click)="addTask()" class="p-2 rounded-lg text-white bg-blue-500 hover:bg-blue-600">{{ modalTittle }} task</button>
+        <button (click)="closeModal()" class="p-2 rounded-lg text-white bg-red-500 hover:bg-red-600">Cancel</button>
+      </div>
+    </div>
+  </div>
 </div>
