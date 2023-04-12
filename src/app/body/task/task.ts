@@ -4,5 +4,6 @@ export interface Task
   name: string;
   description: string;
   user?: string;
-  category: string;
+  idCategory?: string,
+  category: any;
 }

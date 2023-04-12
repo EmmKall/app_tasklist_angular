@@ -1,7 +1,8 @@
+<app-spinner *ngIf="spinner"></app-spinner>
 <div class="container mx-auto">
   <div class="my-5 md:my-10 p-3 bg-white rounded-lg shadow-xl">
     <h1 class="text-center text-xl font-bold text-blue-500 border-b-2 border-blue-500">Task lists</h1>
-    <button (click)="showAddTsk()" class="my-2 p-3 shadow-lg rounded-lg bg-blue-500 text-white"><i class="fa-light fa-plus fa-flip fa-xl" style="color: #ffffff;"></i> Add Task</button>
+    <button (click)="showAddTask()" class="my-2 p-3 shadow-lg rounded-lg bg-blue-500 text-white"><i class="fa-light fa-plus fa-flip fa-xl" style="color: #ffffff;"></i> Add Task</button>
   </div>
 
   <div class="my-5 md:my-10 py-3 bg-white rounded-lg shadow-lg">
@@ -35,8 +36,8 @@
               <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
               <td mat-cell *matCellDef="let row">
                 <div class="flex flex-row justify-evenly">
-                  <button class="p-2 text-white rounded bg-green-500"><i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i></button>
-                  <button class="p-2 text-white rounded bg-red-500"><i class="fa-regular fa-trash-can" style="color: #ffffff;"></i></button>
+                  <button (click)="fillData( row.id )" class="p-2 text-white rounded bg-green-500"><i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i></button>
+                  <button (click)="deleteTask( row.id )" class="p-2 text-white rounded bg-red-500"><i class="fa-regular fa-trash-can" style="color: #ffffff;"></i></button>
                 </div>
               </td>
             </ng-container>
@@ -67,23 +68,26 @@
       <button (click)="closeModal()" class="bg-red-500 p-1 rounded"><i class="fa-solid fa-xmark fa-lg" style="color: #ffffff;"></i></button>
     </div>
     <div class="modal-body">
-      <div class="my-2 flex flex-col">
+      <div class="my-2 p-2  flex flex-col">
         <label for="">Task</label>
         <input type="text" name="" id="" [(ngModel)]="task.name" placeholder="task name" class="p-2 bg-gray-200 border-t-2 border-blue-500">
       </div>
-      <div class="my-2 flex flex-col">
+      <div class="my-2 p-2  flex flex-col">
         <label for="">Description</label>
         <textarea name="" id="" [(ngModel)]="task.description" class="p-2 bg-gray-200 border-t-2 border-blue-500"></textarea>
       </div>
-      <div class="my-2 flex flex-col">
+      <div class="w-full md:w-1/2 mx-auto my-2 p-2  flex flex-col">
         <label for="">Status</label>
         <select name="" id="" [(ngModel)]="task.category" class="p-2 bg-gray-200 border-t-2 border-blue-500">
           <option value="" selected disabled>--Select a option--</option>
-          <option value="1">Pending</option>
+          <option value="{{ item.id }}" *ngFor="let item of dataCategory" >{{ item.name }}</option>
         </select>
       </div>
-      <div class="w-full flex flex-row justify-evenly py-3">
-        <button (click)="addTask()" class="p-2 rounded-lg text-white bg-blue-500 hover:bg-blue-600">{{ modalTittle }} task</button>
+      <div class="w-full flex flex-row justify-evenly py-3 border-t-2 border-blue-600 bg-gray-300">
+        <button [disabled]="( task.name === '' || task.description === '' || task.category === '' )"
+                (click)="handleSubmit()"
+                [ngClass] = " ( task.name === '' || task.description === '' || task.category === '' ) ? 'bg-blue-200' : 'bg-blue-500 hover:bg-blue-600' "
+                class="p-2 rounded-lg text-white">{{ modalTittle }} task</button>
         <button (click)="closeModal()" class="p-2 rounded-lg text-white bg-red-500 hover:bg-red-600">Cancel</button>
       </div>
     </div>

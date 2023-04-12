@@ -10,8 +10,9 @@
       <nav *ngIf="showMenu" class="flex flex-col md:flex-row md:justify-end items-center md:items-center gap-3">
         <li *ngIf="!isLoged" class="list-none"><a routerLink="/login" class="text-2xl md:text-lg hover:font-semibold border-b-2 border-blue-500 hover:border-white">Login</a></li>
         <li *ngIf="isLoged" class="list-none"><button (click)="closeSession()" class="cursor-pointer text-2xl md:text-lg hover:font-semibold border-b-2 border-blue-500 hover:border-white">Logout</button></li>
-        <li *ngIf="isLoged" class="list-none"><a routerLink="" class="text-2xl md:text-lg hover:font-semibold border-b-2 border-blue-500 hover:border-white">Perfil</a></li>
-        <li *ngIf="isLoged" class="list-none"><a routerLink="" class="text-2xl md:text-lg hover:font-semibold border-b-2 border-blue-500 hover:border-white">Tasks</a></li>
+        <li *ngIf="isLoged" class="list-none"><a routerLink="/app/user" class="text-2xl md:text-lg hover:font-semibold border-b-2 border-blue-500 hover:border-white">Perfil</a></li>
+        <li *ngIf="isLoged" class="list-none"><a routerLink="/app/task" class="text-2xl md:text-lg hover:font-semibold border-b-2 border-blue-500 hover:border-white">Tasks</a></li>
+        <li *ngIf="isLoged" class="list-none"><a routerLink="/app/category" class="text-2xl md:text-lg hover:font-semibold border-b-2 border-blue-500 hover:border-white">Status</a></li>
       </nav>
     </div>
   </div>
