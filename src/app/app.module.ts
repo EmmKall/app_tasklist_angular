@@ -5,10 +5,17 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 
+import { MatSliderModule } from '@angular/material/slider';
+import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
+import { MatToolbarModule} from '@angular/material/toolbar';
+import { MatIconModule} from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { MatSortModule } from '@angular/material/sort';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -44,10 +51,17 @@ import { InformationService } from './services/information.service';
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    MatSliderModule,
+    MatProgressSpinnerModule,
+    MatButtonModule,
     MatTableModule,
+    MatSnackBarModule,
+    MatToolbarModule,
     MatCardModule,
+    MatIconModule,
     MatPaginatorModule,
     MatFormFieldModule,
+    MatInputModule,
     MatSortModule
   ],
   providers: [

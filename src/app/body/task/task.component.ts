@@ -1,13 +1,15 @@
 import { Component, ViewChild } from '@angular/core';
-import { HelpersService } from 'src/app/services/helpers.service';
+
 import { TaskService } from './task.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-
 import Swal from 'sweetalert2';
+
+import { HelpersService } from 'src/app/services/helpers.service';
 import { Task } from './task';
 import { CategoryService } from '../category/category.service';
 import { Category } from '../category/category';
+import { MatSort, Sort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-task',
@@ -38,7 +40,10 @@ export class TaskComponent
   displayedColumns: string[] = ['name', 'description', 'category', 'actions' ];
   dataSource = new MatTableDataSource( this.dataView );
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
+  sortedData: Task[] = [];
 
   filter:string = '';
 
@@ -49,9 +54,9 @@ export class TaskComponent
     this.dataSource = new MatTableDataSource( this.data );
   }
 
-  ngAfterViewInit()
-  {
+  ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   getData(): void
@@ -92,6 +97,23 @@ export class TaskComponent
         {
           this.sHelper.showAlert( 'Hubo un error', 'Something wrong', 'error', 3000 );
         }
+    });
+  }
+
+  sortData(sort: Sort) {
+    const data = this.dataView.slice();
+    if (!sort.active || sort.direction === '') {
+      this.sortedData = data;
+      return;
+    }
+    this.dataView = data.sort( (a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'name': return this.sHelper.compare(a.name.toLowerCase(), b.name.toLowerCase(), isAsc);
+        case 'description': return this.sHelper.compare(a.description.toLowerCase(), b.description.toLowerCase(), isAsc);
+        case 'category': return this.sHelper.compare(a.category, b.category, isAsc);
+        default: return 0;
+      }
     });
   }
 

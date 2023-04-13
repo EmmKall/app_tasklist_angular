@@ -51,8 +51,8 @@ export class LoginComponent
       if( status === 200 )
       {
         /* Update Token */
-        const { id, user, token } = result.data;
-        this.helpers.setToken( id, token, user );
+        const { id, user, token, rol } = result.data;
+        this.helpers.setToken( id, token, user, rol );
         this.sInformation.name$.emit( true );
         this.helpers.showAlert( 'Welcome', 'Login sucessfully', 'success', 2500 );
         setTimeout(() => {

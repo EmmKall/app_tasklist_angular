@@ -5,7 +5,12 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-table{ overflow-x: scroll; }
+table, mat-table
+{
+  overflow-x: scroll !important;
+  width: 100%;
+
+}
 
 .modal-container
 {

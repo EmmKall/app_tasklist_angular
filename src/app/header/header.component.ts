@@ -15,6 +15,7 @@ export class HeaderComponent
 
   viewMovil:boolean = false;
   showMenu: boolean = true;
+  rol: string = this.sHelper.getRol();
 
   name: string = '';
 

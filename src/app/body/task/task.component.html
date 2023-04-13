@@ -5,57 +5,52 @@
     <button (click)="showAddTask()" class="my-2 p-3 shadow-lg rounded-lg bg-blue-500 text-white"><i class="fa-light fa-plus fa-flip fa-xl" style="color: #ffffff;"></i> Add Task</button>
   </div>
 
-  <div class="my-5 md:my-10 py-3 bg-white rounded-lg shadow-lg">
+  <div class="my-5 p-5 md:my-10 py-3 bg-white rounded-lg shadow-lg">
 
-    <mat-card>
-      <mat-card-content>
+    <div class="mat-elevation-z8 w-full">
 
-        <div class="w-full my-2">
-          <input type="text" [(ngModel)]="filter" (input)="filterData()" class="w-full p-2 bg-gray-200" placeholder="Filter task" >
-        </div>
+      <mat-form-field class="w-full">
+        <mat-label>Filter</mat-label>
+        <input matInput [(ngModel)]="filter" (input)="filterData()" placeholder="Filter task" #input>
+      </mat-form-field>
 
-        <div class="mat-elevation-z8">
-          <table mat-table [dataSource]="dataView" matSort #sort="matSort">
+      <div class="overflow-x-auto overflow-y-auto max-h-[40rem]">
+        <table mat-table [dataSource]="dataView" (matSortChange)="sortData($event)" matSort matSortActive="name" matSortDirection="asc" class="">
 
-            <ng-container matColumnDef="name">
-              <th mat-header-cell *matHeaderCellDef> Task </th>
-              <td mat-cell *matCellDef="let row"> {{row.name}} </td>
-            </ng-container>
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Task </th>
+            <td mat-cell *matCellDef="let element"> {{ element.name }} </td>
+          </ng-container>
 
-            <ng-container matColumnDef="description">
-              <th mat-header-cell *matHeaderCellDef> Description </th>
-              <td mat-cell *matCellDef="let row"> {{row.description}} </td>
-            </ng-container>
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
+            <td mat-cell *matCellDef="let element"> {{ element.description }} </td>
+          </ng-container>
 
-            <ng-container matColumnDef="category">
-              <th mat-header-cell *matHeaderCellDef> Status </th>
-              <td mat-cell *matCellDef="let row"> {{row.category}} </td>
-            </ng-container>
+          <ng-container matColumnDef="category">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+            <td mat-cell *matCellDef="let element"> {{ element.category }} </td>
+          </ng-container>
 
-            <ng-container matColumnDef="actions">
-              <th mat-header-cell mat-header-cell *matHeaderCellDef> Action </th>
-              <td mat-cell *matCellDef="let row">
-                <div class="flex flex-row justify-evenly">
-                  <button (click)="fillData( row.id )" class="p-2 text-white rounded bg-green-500"><i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i></button>
-                  <button (click)="deleteTask( row.id )" class="p-2 text-white rounded bg-red-500"><i class="fa-regular fa-trash-can" style="color: #ffffff;"></i></button>
-                </div>
-              </td>
-            </ng-container>
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <td mat-cell *matCellDef="let element">
+              <div class="flex justify-evenly">
+                <button (click)="fillData( element.id )" class="p-2 rounded text-white bg-green-400 hover:bg-green-500"><i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i></button>
+                <button (click)="deleteTask( element.id )" class="p-2 rounded text-white bg-red-400 hover:bg-red-500"><i class="fa-regular fa-trash-can" style="color: #ffffff;"></i>  </button>
+              </div>
+            </td>
+          </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-            <!-- Row shown when there is no matching data. -->
-            <!-- <tr class="mat-row" *matNoDataRow>
-              <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
-            </tr> -->
-          </table>
-
-          <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" aria-label="Select page of users"></mat-paginator>
-        </div>
-
-      </mat-card-content>
-    </mat-card>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <!-- <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                  showFirstLastButtons
+                  aria-label="Select page of periodic elements">
+        </mat-paginator> -->
+      </div>
+    </div>
 
   </div>
 </div>
